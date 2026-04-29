@@ -1,4 +1,5 @@
-
+import dns from "node:dns";
+dns.setServers(['8.8.8.8','8.8.4.4']);
 
 import { Outfit } from "next/font/google";
 import "./globals.css";
@@ -8,7 +9,6 @@ import Footer from "@/components/Footer";
 const outfit = Outfit({
   subsets: ["latin"],
 });
-
 
 export const metadata = {
   title: "Create Next App",
