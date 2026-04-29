@@ -1,8 +1,17 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import MyLink from "./MyLink";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
 
 const Navbar = () => {
+
+    const userData = authClient.useSession();
+    const user = userData.data?.user;
+    console.log(user);
+
+
   return (
     <div className="border-b px-2">
       <nav className=" flex justify-between items-center  py-3 max-w-7xl mx-auto w-full">
@@ -20,28 +29,41 @@ const Navbar = () => {
 
         <ul className="flex items-center gap-5 text-sm">
           <li>
-            <Link href={"/"}>Home</Link>
+            <MyLink href={"/"}>Home</MyLink>
           </li>
           <li>
-            <Link href={"/all-photos"}>All Photos</Link>
+            <MyLink href={"/all-photos"}>All Photos</MyLink>
           </li>
           <li>
-            <Link href={"/pricing"}>Pricing</Link>
+            <MyLink href={"/pricing"}>Pricing</MyLink>
           </li>
           <li>
-            <Link href={"/profile"}>Profile</Link>
+            <MyLink href={"/profile"}>Profile</MyLink>
           </li>
         </ul>
 
         <div className="flex">
-          <ul className="flex items-center  text-sm gap-4">
+          { !user && <ul className="flex items-center  text-sm gap-4">
             <li>
               <Link href={"/signup"}>SignUp</Link>
             </li>
             <li>
               <Link href={"/signin"}>SignIn</Link>
             </li>
-          </ul>
+          </ul>}
+
+            {
+                user && <div className="flex items-center gap-2">
+                    <p>Hello,{user.name}</p>
+                    <Avatar size="sm">
+        <Avatar.Image alt={user.name} src={user.image} />
+        <Avatar.Fallback>JD</Avatar.Fallback>
+      </Avatar>
+      <Button variant="danger" size="sm" onClick={async() => await authClient.signOut()}>LogOut</Button>
+                </div>
+
+            }
+
         </div>
       </nav>
     </div>

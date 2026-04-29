@@ -1,3 +1,5 @@
+
+
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
